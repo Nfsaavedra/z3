@@ -1,0 +1,10 @@
+z3_add_component(kconfirm
+  SOURCES
+    kconfirm_solver.cpp
+  REGISTRATION_HEADERS
+    kconfirm_solver.h
+  COMPONENT_DEPENDENCIES
+    sat_solver
+    smt
+    solver
+)

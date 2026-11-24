@@ -22,5 +22,6 @@ z3_add_component(portfolio
     subpaving_tactic
     ufbv_tactic
     fd_solver
+    kconfirm
     simplifiers
 )

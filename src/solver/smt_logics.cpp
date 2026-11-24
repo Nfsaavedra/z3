@@ -22,7 +22,7 @@ Revision History:
 
 
 bool smt_logics::supported_logic(symbol const & s) {
-    return logic_has_ff(s) || logic_has_uf(s) || logic_is_all(s) || logic_has_fd(s) ||
+    return logic_has_ff(s) || logic_has_uf(s) || logic_is_all(s) || logic_is_kconfirm(s) || logic_has_fd(s) ||
         logic_has_arith(s) || logic_has_bv(s) ||
         logic_has_array(s) || logic_has_seq(s) || logic_has_str(s) || logic_has_horn(s) || logic_has_fpa(s) ||
            logic_has_datatype(s) || logic_has_finite_sets(s);
@@ -56,7 +56,8 @@ bool smt_logics::logic_has_arith(symbol const & s) {
         str == "QF_S" ||
         logic_is_all(s) ||
         str == "QF_FD" ||
-        str == "HORN";
+        str == "HORN" ||
+        logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_transcendental(symbol const & s) {
@@ -72,14 +73,16 @@ bool smt_logics::logic_has_bv(symbol const & s) {
         logic_is_all(s) ||
         str == "QF_FD" ||
         str == "SMTFD" ||
-        str == "HORN";
+        str == "HORN" ||
+        logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_finite_sets(symbol const &s) {
     auto str = s.str();
     return
         str.find("FS") != std::string::npos ||
-        logic_is_all(s);
+        logic_is_all(s) ||
+        logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_array(symbol const & s) {
@@ -89,7 +92,8 @@ bool smt_logics::logic_has_array(symbol const & s) {
         str.starts_with("A") ||
         logic_is_all(s) ||
         str == "SMTFD" ||
-        str == "HORN";
+        str == "HORN" ||
+        logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_seq(symbol const & s) {
@@ -101,13 +105,15 @@ bool smt_logics::logic_has_str(symbol const & s) {
     return str == "QF_S" ||
            str == "QF_SLIA" ||
            str == "QF_SNIA" ||
-           logic_is_all(s);
+           logic_is_all(s) ||
+           logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_fpa(symbol const & s) {
     auto str = s.str();
     return str.find("FP") != std::string::npos ||
-           logic_is_all(s);
+           logic_is_all(s) ||
+           logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_uf(symbol const & s) {
@@ -122,7 +128,7 @@ bool smt_logics::logic_has_horn(symbol const& s) {
 }
 
 bool smt_logics::logic_has_pb(symbol const& s) {
-    return s == "QF_FD" || logic_is_all(s) || logic_has_horn(s);
+    return s == "QF_FD" || logic_is_all(s) || logic_has_horn(s) || logic_is_kconfirm(s);
 }
 
 bool smt_logics::logic_has_datatype(symbol const& s) {
@@ -131,6 +137,7 @@ bool smt_logics::logic_has_datatype(symbol const& s) {
         str.find("DT") != std::string::npos ||
         str == "QF_FD" ||
         logic_is_all(s) ||
-        logic_has_horn(s);
+        logic_has_horn(s) ||
+        logic_is_kconfirm(s);
 }
 

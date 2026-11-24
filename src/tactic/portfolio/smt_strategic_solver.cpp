@@ -43,6 +43,7 @@ Notes:
 #include "tactic/smtlogics/smt_tactic.h"
 #include "tactic/fd_solver/fd_solver.h"
 #include "tactic/fd_solver/smtfd_solver.h"
+#include "tactic/kconfirm/kconfirm_solver.h"
 #include "tactic/ufbv/ufbv_tactic.h"
 #include "tactic/fpa/qffp_tactic.h"
 #include "muz/fp/horn_tactic.h"
@@ -146,6 +147,8 @@ static solver* mk_special_solver_for_logic(ast_manager & m, params_ref const & p
     parallel_params pp(p);
     if ((logic == "QF_FD" || logic == "SAT") && !m.proofs_enabled() && !pp.enable())
         return mk_fd_solver(m, p);
+    if (logic == "QF_KCONFIRM" && !m.proofs_enabled() && !pp.enable())
+        return mk_kconfirm_solver(m, p);
     if (logic == "SMTFD" && !m.proofs_enabled() && !pp.enable())
         return mk_smtfd_solver(m, p);
     return nullptr;
